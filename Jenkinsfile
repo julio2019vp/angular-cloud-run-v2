@@ -19,28 +19,27 @@ pipeline {
             }
         }
 
-        stage('GCP & Docker Auth') {
+        stage('Build and Push Image') {
             agent {
-                docker { 
+                docker {
                     image 'google/cloud-sdk:stable'
                     args '-v /var/run/docker.sock:/var/run/docker.sock --user root'
                 }
             }
-            steps {
-                script {
-                    sh "gcloud config set project ${env.GCP_PROJECT_ID}"
-                    sh "gcloud auth configure-docker ${env.GCP_REGION}-docker.pkg.dev --quiet"
-                }
-            }
-        }
 
-        stage('Build and Push Image') {
-            agent any
             steps {
-                sh """
-                docker build -t ${env.IMAGE_TAG} .
-                docker push ${env.IMAGE_TAG}
-                """
+                sh '''
+                    apt-get update
+                    apt-get install -y docker.io
+
+                    gcloud config set project ${GCP_PROJECT_ID}
+
+                    gcloud auth configure-docker ${GCP_REGION}-docker.pkg.dev --quiet
+
+                    docker build -t ${IMAGE_TAG} .
+
+                    docker push ${IMAGE_TAG}
+                '''
             }
         }
 
