@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         GCP_PROJECT_ID         = "sanbox-aldo-prod"
-        GCP_REGION             = "us-central1"
+        GCP_REGION             = "us-west1"
         ARTIFACT_REGISTRY_REPO = "container-repository-gemini-at" 
         CLOUD_RUN_SERVICE_NAME = "gemini-angular-app"
         ENVIRONMENT_NAME       = "dev"
