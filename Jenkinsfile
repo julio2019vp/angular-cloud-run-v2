@@ -2,7 +2,7 @@ pipeline {
     agent any 
 
     environment {
-        GCP_PROJECT_ID         = "sanbox-aldo-prod"
+        GCP_PROJECT_ID         = "neon-airway-450022-i1"
         GCP_REGION             = "us-central1"
         ARTIFACT_REGISTRY_REPO = "container-repository-gemini-at" 
         CLOUD_RUN_SERVICE_NAME = "gemini-angular-app"
